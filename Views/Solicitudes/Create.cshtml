@@ -1,0 +1,73 @@
+@{
+    ViewData["Title"] = "Nueva Solicitud";
+    var tipos = ViewBag.TiposSolicitud as List<SistemaSolicitudes.Models.TipoSolicitud>;
+}
+
+<h2 class="mb-4">Registrar Nueva Solicitud</h2>
+
+<a asp-action="Index" class="btn btn-secondary mb-3">? Volver al listado</a>
+
+<form asp-action="Create" method="post" enctype="multipart/form-data">
+    <div class="row g-3">
+        <div class="col-md-6">
+            <label class="form-label">Folio *</label>
+            <input name="folio" class="form-control" maxlength="50" required placeholder="Ej: SOL-2025-001" />
+        </div>
+
+        <div class="col-md-6">
+            <label class="form-label">Nombre del Solicitante</label>
+            <input name="nombreSolicitante" class="form-control" maxlength="200" placeholder="Opcional" />
+        </div>
+
+        <div class="col-md-6">
+            <label class="form-label">Departamento</label>
+            <input name="departamento" class="form-control" maxlength="200" placeholder="Opcional" />
+        </div>
+
+        <div class="col-md-6">
+            <label class="form-label">Tipo de Solicitud *</label>
+            <!-- Combo editable con filtro al escribir -->
+            <input list="tiposList" name="tipoSolicitudID" class="form-control" required />
+            <datalist id="tiposList">
+                @if (tipos != null)
+                {
+                    @foreach (var tipo in tipos)
+                    {
+                        <option value="@tipo.ID">@tipo.Nombre</option>
+                    }
+                }
+            </datalist>
+        </div>
+
+        <div class="col-12">
+            <label class="form-label">Oficio de Solicitud (PDF)</label>
+            <input type="file" name="oficioSolicitud" accept=".pdf" class="form-control" />
+        </div>
+
+        <div class="col-12">
+            <label class="form-label">Oficio de Respuesta (PDF)</label>
+            <input type="file" name="oficioRespuesta" accept=".pdf" class="form-control" />
+        </div>
+
+        <div class="col-12">
+            <label class="form-label">Anexos (PDF)</label>
+            <input type="file" name="anexos" accept=".pdf" class="form-control" />
+        </div>
+
+        <div class="col-12">
+            <button type="submit" class="btn btn-primary">Registrar Solicitud</button>
+            <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    <script>
+        // Opcional: convertir a mayúsculas mientras se escribe
+        document.querySelectorAll('input[type="text"]').forEach(input => {
+            input.addEventListener('input', function () {
+                this.value = this.value.toUpperCase();
+            });
+        });
+    </script>
+}

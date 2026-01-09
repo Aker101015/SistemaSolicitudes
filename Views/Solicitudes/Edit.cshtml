@@ -1,0 +1,83 @@
+﻿@model SistemaSolicitudes.Models.Solicitud
+@{
+    ViewData["Title"] = "Editar Solicitud";
+    var tipos = ViewBag.TiposSolicitud as List<SistemaSolicitudes.Models.TipoSolicitud>;
+}
+
+<h2 class="mb-4">Editar Solicitud</h2>
+
+<a asp-action="Index" class="btn btn-secondary mb-3">← Volver al listado</a>
+
+<form asp-action="Edit" method="post" enctype="multipart/form-data">
+    <input type="hidden" name="id" value="@Model.ID" />
+
+    <div class="row g-3">
+        <div class="col-md-6">
+            <label class="form-label">Folio *</label>
+            <input name="folio" class="form-control" value="@Model.Folio" maxlength="50" required />
+        </div>
+
+        <div class="col-md-6">
+            <label class="form-label">Nombre del Solicitante</label>
+            <input name="nombreSolicitante" class="form-control" value="@Model.NombreSolicitante" maxlength="200" />
+        </div>
+
+        <div class="col-md-6">
+            <label class="form-label">Departamento</label>
+            <input name="departamento" class="form-control" value="@Model.Departamento" maxlength="200" />
+        </div>
+
+        <div class="col-md-6">
+            <label class="form-label">Tipo de Solicitud *</label>
+            <input list="tiposList" name="tipoSolicitudID" class="form-control" value="@Model.TipoSolicitudID" required />
+            <datalist id="tiposList">
+                @if (tipos != null)
+                {
+                    @foreach (var tipo in tipos)
+                    {
+                        <option value="@tipo.ID">@tipo.Nombre</option>
+                    }
+                }
+            </datalist>
+        </div>
+
+        <div class="col-12">
+            <label class="form-label">Oficio de Solicitud actual</label>
+            @if (!string.IsNullOrEmpty(Model.RutaOficio))
+            {
+                <div class="mb-2">
+                    <a href="@Model.RutaOficio" target="_blank" class="btn btn-sm btn-outline-primary">Ver PDF actual</a>
+                </div>
+            }
+            <label class="form-label">Reemplazar Oficio de Solicitud (PDF)</label>
+            <input type="file" name="oficioSolicitud" accept=".pdf" class="form-control" />
+        </div>
+
+        <div class="col-12">
+            <label class="form-label">Anexos actuales</label>
+            @if (!string.IsNullOrEmpty(Model.RutaAnexos))
+            {
+                <div class="mb-2">
+                    <a href="@Model.RutaAnexos" target="_blank" class="btn btn-sm btn-outline-info">Ver Anexos actuales</a>
+                </div>
+            }
+            <label class="form-label">Reemplazar Anexos (PDF)</label>
+            <input type="file" name="anexos" accept=".pdf" class="form-control" />
+        </div>
+
+        <div class="col-12">
+            <button type="submit" class="btn btn-success">Guardar Cambios</button>
+            <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    <script>
+        document.querySelectorAll('input[type="text"]').forEach(input => {
+            input.addEventListener('input', function () {
+                this.value = this.value.toUpperCase();
+            });
+        });
+    </script>
+}

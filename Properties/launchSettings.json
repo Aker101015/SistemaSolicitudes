@@ -1,0 +1,14 @@
+﻿{
+  "profiles": {
+    "SistemaSolicitudes": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "launchBrowser": true,
+      //"applicationUrl": "http://*:7223", --descomentar para aplicar en producción.
+      "applicationUrl": "https://localhost:5001;http://localhost:5000",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}

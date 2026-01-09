@@ -1,0 +1,110 @@
+﻿@model SistemaSolicitudes.Models.Solicitud
+
+@{
+    ViewData["Title"] = "Detalles de la Solicitud";
+}
+
+<h2>Detalles de la Solicitud</h2>
+
+<div>
+    <h4>Solicitud</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">No. PROG</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.NoProg)</dd>
+
+        <dt class="col-sm-2">NO. OF.</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.NoOficioSolicitud)</dd>
+
+        <dt class="col-sm-2">Solicitante</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.NombreSolicitante)</dd>
+
+        <dt class="col-sm-2">Tipo de solicitud</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.TipoSolicitud.Nombre)</dd>
+
+        <dt class="col-sm-2">Solicitado en el oficio</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.SolicitudDetalle)</dd>
+
+        <dt class="col-sm-2">Folio de respuesta</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.FolioRespuesta)</dd>
+
+        <dt class="col-sm-2">Fecha de respuesta</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.FechaRespuesta)</dd>
+
+        <dt class="col-sm-2">Quién firma</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.NombreFirmante)</dd>
+
+        <dt class="col-sm-2">Observaciones</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.Observaciones)</dd>
+
+        <dt class="col-sm-2">Quién responde</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.NombreResponsableRespuesta)</dd>
+
+        <dt class="col-sm-2">Quién registra</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.NombreRegistrador)</dd>
+
+        <dt class="col-sm-2">PDF de Solicitud (OF SOLICITUD)</dt>
+        <dd class="col-sm-10">
+            @if (!string.IsNullOrEmpty(Model.ArchivoPdfSolicitud))
+            {
+            <a href="@Model.ArchivoPdfSolicitud" target="_blank" class="btn btn-sm btn-outline-primary" title="Ver PDF de Solicitud">
+                <i class="bi bi-file-earmark-pdf"></i> Ver PDF
+            </a>
+            }
+            else
+            {
+            <span class="text-muted">No se ha subido ningún PDF.</span>
+            }
+        </dd>
+
+        <dt class="col-sm-2">PDF de Respuesta (OF RESPUESTA)</dt>
+        <dd class="col-sm-10">
+            @if (!string.IsNullOrEmpty(Model.ArchivoPdfRespuesta))
+            {
+            <a href="@Model.ArchivoPdfRespuesta" target="_blank" class="btn btn-sm btn-outline-primary" title="Ver PDF de Respuesta">
+                <i class="bi bi-file-earmark-pdf"></i> Ver PDF
+            </a>
+            }
+            else
+            {
+            <span class="text-muted">No se ha subido ningún PDF.</span>
+            }
+        </dd>
+
+        <dt class="col-sm-2">PDF de Anexos</dt>
+        <dd class="col-sm-10">
+            @if (!string.IsNullOrEmpty(Model.ArchivoAnexos))
+            {
+            <a href="@Model.ArchivoAnexos" target="_blank" class="btn btn-sm btn-outline-primary" title="Ver PDF de Anexos">
+                <i class="bi bi-file-earmark-pdf"></i> Ver PDF
+            </a>
+            }
+            else
+            {
+            <span class="text-muted">No se han subido anexos.</span>
+            }
+        </dd>
+
+        <dt class="col-sm-2">Estado</dt>
+        <dd class="col-sm-10">
+            <span class="badge @(Model.Status ? "bg-success" : "bg-danger")">
+                @(Model.Status ? "Activo" : "Inactivo")
+            </span>
+        </dd>
+
+        <dt class="col-sm-2">Fecha de creación</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.FechaCreacion)</dd>
+
+        <dt class="col-sm-2">Fecha de actualización</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.FechaActualizacion)</dd>
+    </dl>
+</div>
+
+<div class="mt-4">
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">
+        <i class="bi bi-pencil-square"></i> Editar
+    </a>
+    <a asp-action="Index" class="btn btn-secondary">
+        <i class="bi bi-arrow-left-circle"></i> Regresar
+    </a>
+</div>

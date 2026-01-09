@@ -1,0 +1,38 @@
+﻿@{
+    ViewData["Title"] = "Subir Documentos";
+}
+<h2>Subir Oficios y Anexos</h2>
+
+@if (TempData["Mensaje"] != null)
+{
+    <div class="alert alert-success">@TempData["Mensaje"]</div>
+}
+
+<form asp-action="Subir" method="post" enctype="multipart/form-data">
+    <div class="mb-3">
+        <label class="form-label">Folio de Solicitud</label>
+        <input name="folioSolicitud" class="form-control" maxlength="50" placeholder="Ej: SOL-2025-001" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Folio de Respuesta</label>
+        <input name="folioRespuesta" class="form-control" maxlength="50" placeholder="Ej: OF-2025-001" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Oficio de Solicitud (PDF)</label>
+        <input type="file" name="oficioSolicitud" accept=".pdf" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Oficio de Respuesta (PDF)</label>
+        <input type="file" name="oficioRespuesta" accept=".pdf" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Anexos (PDF)</label>
+        <input type="file" name="anexos" accept=".pdf" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Registrar Documentos</button>
+</form>

@@ -1,0 +1,27 @@
+﻿@model SistemaSolicitudes.Models.Solicitud
+@{
+    ViewData["Title"] = "Inactivar Solicitud";
+}
+
+<h2 class="mb-4">¿Marcar como inactiva esta solicitud?</h2>
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Folio: @Model.Folio</h5>
+        <p><strong>Solicitante:</strong> @(Model.NombreSolicitante ?? "—")</p>
+        <p><strong>Tipo:</strong> @(Model.TipoSolicitud?.Nombre ?? "—")</p>
+        <p><strong>Departamento:</strong> @(Model.Departamento ?? "—")</p>
+        <p><strong>Fecha de registro:</strong> @Model.FechaRegistro.ToString("dd/MM/yyyy HH:mm")</p>
+
+        <div class="alert alert-warning">
+            <i class="bi bi-exclamation-triangle"></i>
+            <strong>Importante:</strong> El registro no se eliminará. Solo dejará de aparecer en listados activos, pero conservará su consecutivo y podrá consultarse en informes históricos.
+        </div>
+
+        <form asp-action="Delete" method="post">
+            <input type="hidden" name="id" value="@Model.ID" />
+            <button type="submit" class="btn btn-danger">Sí, marcar como inactiva</button>
+            <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+        </form>
+    </div>
+</div>

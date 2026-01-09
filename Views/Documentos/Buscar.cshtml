@@ -1,0 +1,66 @@
+﻿@{
+    ViewData["Title"] = "Buscar Documentos";
+}
+<h2>Buscar por Folio</h2>
+
+<form asp-action="Buscar" method="post" class="mb-4">
+    <div class="input-group">
+        <input name="folioBusqueda" class="form-control" placeholder="Ingrese folio de solicitud o respuesta" />
+        <button type="submit" class="btn btn-secondary">Buscar</button>
+    </div>
+</form>
+
+@if (ViewBag.Resultados != null && ViewBag.Resultados.Count > 0)
+{
+    <h3>Resultados (<span class="text-muted">@ViewBag.Resultados.Count</span>)</h3>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Folio Solicitud</th>
+                    <th>Folio Respuesta</th>
+                    <th>Archivos</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var doc in ViewBag.Resultados.Reverse())
+                {
+                    <tr>
+                        <td>@doc.ID</td>
+                        <td>@(doc.FolioSolicitud ?? "—")</td>
+                        <td>@(doc.FolioRespuesta ?? "—")</td>
+                        <td>
+                            @if (!string.IsNullOrEmpty(doc.RutaSolicitud))
+                            {
+                                <a href="@doc.RutaSolicitud" target="_blank" class="btn btn-sm btn-outline-primary">Solicitud</a>
+                            }
+                            @if (!string.IsNullOrEmpty(doc.RutaRespuesta))
+                            {
+                                <a href="@doc.RutaRespuesta" target="_blank" class="btn btn-sm btn-outline-success">Respuesta</a>
+                            }
+                            @if (!string.IsNullOrEmpty(doc.RutaAnexos))
+                            {
+                                <a href="@doc.RutaAnexos" target="_blank" class="btn btn-sm btn-outline-info">Anexos</a>
+                            }
+                        </td>
+                        <td>
+                            <form asp-action="Inactivar" method="post" style="display:inline;">
+                                <input type="hidden" name="id" value="@doc.ID" />
+                                <button type="submit" class="btn btn-sm btn-outline-danger"
+                                        onclick="return confirm('¿Marcar como inactivo? El registro se conservará con su consecutivo.')">
+                                    Inactivar
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else if (ViewBag.Resultados != null)
+{
+    <div class="alert alert-warning">No se encontraron documentos activos con ese folio.</div>
+}
